@@ -1,9 +1,12 @@
 import { motion } from 'framer-motion';
+import { useState } from 'react';
 import { CalendarDaysIcon, ChatBubbleBottomCenterTextIcon } from '@heroicons/react/24/outline';
+import ConsultationModal from '../layout/ConsultationModal';
 
 const BookCTA = () => {
+  const [open, setOpen] = useState(false);
   return (
-    <section className="py-16 md:py-24 bg-gradient-to-r from-primary to-primary-dark">
+    <section className="py-5 md:py-24 bg-gradient-to-r from-primary to-primary-dark">
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
         <motion.div 
           initial={{ opacity: 0, y: 20 }}
@@ -12,8 +15,8 @@ const BookCTA = () => {
           transition={{ duration: 0.8 }}
           className="text-center"
         >
-          <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-primary mb-6">
-            Let's Build Your <span className="text-secondary">Cross-Border</span> Growth Strategy
+          <h2 className="text-2xl md:text-4xl lg:text-5xl font-bold text-primary mb-6">
+            Let's Build Your Cross-Border Growth Strategy
           </h2>
           
           <motion.p
@@ -33,15 +36,14 @@ const BookCTA = () => {
             transition={{ delay: 0.6, duration: 0.8 }}
             className="flex flex-col sm:flex-row justify-center gap-4"
           >
-            <motion.a
-              href="/book"
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-              className="flex items-center justify-center bg-secondary text-white font-bold py-4 px-8 rounded-lg hover:bg-secondary-light transition-colors duration-300"
+            <motion.button
+              onClick={() => setOpen(true)}
+              className="flex items-center justify-center bg-secondary text-primary font-bold py-4 px-8 rounded-lg "
             >
               <CalendarDaysIcon className="h-6 w-6 mr-2" />
-              Book Consultation
-            </motion.a>
+              Book a Consultation
+            </motion.button>
+            <ConsultationModal open={open} onClose={() => setOpen(false)} />
             
             <motion.a
               href="https://wa.me/yournumber"

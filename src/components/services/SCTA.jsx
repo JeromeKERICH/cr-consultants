@@ -3,7 +3,7 @@ import { CalendarIcon, ArrowRightIcon } from '@heroicons/react/24/outline';
 export default function ServiceCTA() {
   const openCalendly = () => {
     // Replace with your actual Calendly URL
-    window.open('https://calendly.com/your-username', '_blank');
+    window.open('https://calendly.com/cr-info-consultants/30min', '_blank');
   };
 
   return (
@@ -29,8 +29,9 @@ export default function ServiceCTA() {
             >
               <CalendarIcon className="h-5 w-5 mr-2" />
               Book 1:1 Consultation
-              <ArrowRightIcon className="h-4 w-4 ml-2" />
+              
             </button>
+            
             
             
           </div>

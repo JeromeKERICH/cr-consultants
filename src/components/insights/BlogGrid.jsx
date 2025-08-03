@@ -6,28 +6,28 @@ export default function FeaturedInsights() {
     {
       id: 1,
       title: "Why UAE is Becoming the Gateway to African Investment",
-      date: "May 15, 2023",
+      date: "May 15, 2025",
       author: "Princess Caroline Mutisya",
       excerpt: "Exploring how Dubai's strategic position and business-friendly policies are creating new opportunities for cross-continental investment flows.",
-      image: "/images/blog/uae-africa-gateway.jpg",
+      image: "/assets/i3.png",
       category: "Investment Trends"
     },
     {
       id: 2,
       title: "Top 5 Legal Mistakes Foreign Investors Make in Africa",
-      date: "June 2, 2023",
+      date: "June 2, 2025",
       author: "CR Legal Team",
       excerpt: "Avoid these common pitfalls when structuring your African market entry to ensure compliance and protect your assets.",
-      image: "/images/blog/legal-mistakes-africa.jpg",
+      image: "/assets/i1.png",
       category: "Legal Advisory"
     },
     {
       id: 3,
       title: "The Rise of PPPs: Financing Africa's Infrastructure Future",
-      date: "June 18, 2023",
-      author: "David Mwangi",
+      date: "June 25, 2025",
+      author: "CR Legal Team",
       excerpt: "How public-private partnerships are transforming energy, transport, and urban development projects across the continent.",
-      image: "/images/blog/africa-ppps.jpg",
+      image: "/assets/i2.png",
       category: "Infrastructure"
     }
   ];

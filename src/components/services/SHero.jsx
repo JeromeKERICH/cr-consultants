@@ -1,7 +1,10 @@
 import { Link } from 'react-router-dom';
+import { useState } from 'react';
 import { CalendarIcon, ArrowRightIcon } from '@heroicons/react/24/outline';
+import ConsultationModal from '../layout/ConsultationModal';
 
 export default function Hero() {
+  const [open, setOpen] = useState(false);
   return (
     <section className="relative bg-gray-900 overflow-hidden">
       {/* Background Image with Gradient Overlay */}
@@ -28,14 +31,14 @@ export default function Hero() {
           
           {/* CTA Buttons */}
           <div className="flex flex-col sm:flex-row gap-4 justify-center md:justify-start">
-            <Link
-              to="/book"
-              className="flex items-center justify-center px-6 py-3 bg-secondary text-primary font-semibold rounded-lg hover:bg-secondary-light transition-colors"
-            >
-              <CalendarIcon className="h-5 w-5 mr-2" />
-              Book Consultation
-              <ArrowRightIcon className="h-4 w-4 ml-2" />
-            </Link>
+          <button
+                onClick={() => setOpen(true)}
+                className="flex items-center justify-center bg-secondary text-primary font-bold py-4 px-8 rounded-lg "
+              >
+                <CalendarIcon className="h-6 w-6 mr-2" />
+                Book a Consultation
+              </button>
+              <ConsultationModal open={open} onClose={() => setOpen(false)} />
             
           </div>
         </div>

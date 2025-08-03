@@ -8,7 +8,7 @@ import {
 
 const LeadershipProfile = () => {
   return (
-    <section className="py-12 md:py-20 bg-gray-50">
+    <section className="py-5 md:py-20 bg-gray-50">
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Section Header */}
         <motion.div
@@ -18,8 +18,8 @@ const LeadershipProfile = () => {
           transition={{ duration: 0.6 }}
           className="text-center mb-12 md:mb-16"
         >
-          <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-primary mb-4">
-            Meet the <span className="text-secondary">Legal Architect</span> Behind Our Success
+          <h2 className="text-2xl md:text-4xl lg:text-5xl font-bold text-primary mb-4">
+            Meet the Legal Architect Behind Our Success
           </h2>
         </motion.div>
 

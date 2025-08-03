@@ -16,8 +16,8 @@ const Navbar = () => {
     { name: "Insights", path: "/insights" },
     { name: "Packages", path: "/packages" },
     
-    { name: "Contact", path: "/contact" },
-    { name: "Book Consultation", path: "/book", highlight: true }
+    { name: "Contact", path: "/contact" }
+    
   ];
 
   return (

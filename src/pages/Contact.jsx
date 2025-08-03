@@ -1,50 +1,90 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { supabase } from '../library/supabaseClient';
 import { MapPinIcon, EnvelopeIcon, PhoneIcon, ClockIcon } from '@heroicons/react/24/outline';
 import { ChatBubbleBottomCenterTextIcon } from '@heroicons/react/24/solid';
 import { CalendarIcon } from '@heroicons/react/24/outline';
+import PhoneInput from 'react-phone-number-input';
+import 'react-phone-number-input/style.css';
 
 export default function ContactPage() {
-  const [formData, setFormData] = useState({
-    name: '',
-    email: '',
-    phone: '',
-    service: '',
-    message: ''
-  });
-  const [isSubmitting, setIsSubmitting] = useState(false);
-  const [submitSuccess, setSubmitSuccess] = useState(false);
+    useEffect(() => {
+        window.scrollTo(0, 0);
+    }, []);
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    setIsSubmitting(true);
-
-    // Save to Supabase
-    const { error } = await supabase
-      .from('contact_messages')
-      .insert([formData]);
-
-    if (!error) {
-      // Send email notification (you'd implement this separately)
-      await sendEmailNotification(formData);
-      setSubmitSuccess(true);
-      setFormData({
+    const [formData, setFormData] = useState({
         name: '',
         email: '',
         phone: '',
         service: '',
         message: ''
-      });
-    }
-    setIsSubmitting(false);
-  };
-
-  const handleChange = (e) => {
-    setFormData({
-      ...formData,
-      [e.target.name]: e.target.value
     });
-  };
+
+    const [isSubmitting, setIsSubmitting] = useState(false);
+    const [submitSuccess, setSubmitSuccess] = useState(false);
+    const [error, setError] = useState(null);
+
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        setIsSubmitting(true);
+        setError(null);
+
+        // Basic validation
+        if (!formData.name || !formData.email) {
+            setError('Name and email are required');
+            setIsSubmitting(false);
+            return;
+        }
+
+        try {
+            const { data, error: supabaseError } = await supabase
+                .from('contact_messages')
+                .insert([{
+                    name: formData.name,
+                    email: formData.email,
+                    phone: formData.phone,
+                    service: formData.service,
+                    message: formData.message,
+                    created_at: new Date().toISOString()
+                }])
+                .select();
+
+            if (supabaseError) throw supabaseError;
+
+            setSubmitSuccess(true);
+            setFormData({
+                name: '',
+                email: '',
+                phone: '',
+                service: '',
+                message: ''
+            });
+
+            // Reset success message after 5 seconds
+            setTimeout(() => {
+                setSubmitSuccess(false);
+            }, 5000);
+
+        } catch (err) {
+            console.error('Submission error:', err);
+            setError(err.message || 'Failed to submit form. Please try again.');
+        } finally {
+            setIsSubmitting(false);
+        }
+    };
+
+    const handleChange = (e) => {
+        setFormData({
+            ...formData,
+            [e.target.name]: e.target.value
+        });
+    };
+
+    const handlePhoneChange = (value) => {
+        setFormData({
+            ...formData,
+            phone: value
+        });
+    };
 
   return (
     <div className="bg-white">
@@ -116,141 +156,140 @@ export default function ContactPage() {
             </div>
           </div>
 
-          {/* Contact Form */}
-          <div>
-            <h2 className="text-2xl font-bold text-gray-900 mb-6">Send Us a Message</h2>
-            {submitSuccess ? (
-              <div className="bg-green-50 border border-green-200 rounded-lg p-4 mb-6">
-                <p className="text-green-800">Thank you! Your message has been sent. We'll respond within 24 hours.</p>
-              </div>
-            ) : (
-              <form onSubmit={handleSubmit} className="space-y-6">
-                <div>
-                  <label htmlFor="name" className="block text-sm font-medium text-gray-700">Full Name *</label>
-                  <input
-                    type="text"
-                    id="name"
-                    name="name"
-                    required
-                    value={formData.name}
-                    onChange={handleChange}
-                    className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-primary focus:border-primary"
-                  />
-                </div>
-                
-                <div>
-                  <label htmlFor="email" className="block text-sm font-medium text-gray-700">Email *</label>
-                  <input
-                    type="email"
-                    id="email"
-                    name="email"
-                    required
-                    value={formData.email}
-                    onChange={handleChange}
-                    className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-primary focus:border-primary"
-                  />
-                </div>
-                
-                <div>
-                  <label htmlFor="phone" className="block text-sm font-medium text-gray-700">Phone</label>
-                  <input
-                    type="tel"
-                    id="phone"
-                    name="phone"
-                    value={formData.phone}
-                    onChange={handleChange}
-                    className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-primary focus:border-primary"
-                  />
-                </div>
-                
-                <div>
-                  <label htmlFor="service" className="block text-sm font-medium text-gray-700">Service Interested In</label>
-                  <select
-                    id="service"
-                    name="service"
-                    value={formData.service}
-                    onChange={handleChange}
-                    className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-primary focus:border-primary"
-                  >
-                    <option value="">Select a service</option>
-                    <option value="Business Strategy">Business Strategy</option>
-                    <option value="Trade Facilitation">Trade Facilitation</option>
-                    <option value="Immigration">Immigration</option>
-                    <option value="Legal">Legal</option>
-                    <option value="Other">Other</option>
-                  </select>
-                </div>
-                
-                <div>
-                  <label htmlFor="message" className="block text-sm font-medium text-gray-700">Message</label>
-                  <textarea
-                    id="message"
-                    name="message"
-                    rows={4}
-                    value={formData.message}
-                    onChange={handleChange}
-                    className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-primary focus:border-primary"
-                  />
-                </div>
-                
-                <div>
-                  <button
-                    type="submit"
-                    disabled={isSubmitting}
-                    className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-primary hover:bg-primary-dark focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary"
-                  >
-                    {isSubmitting ? 'Sending...' : (
-                      <>
-                        <EnvelopeIcon className="h-5 w-5 mr-2" />
-                        Send Message
-                      </>
-                    )}
-                  </button>
-                </div>
-              </form>
-            )}
-          </div>
-        </div>
-      </section>
+    
+                    <div>
+                        <h2 className="text-2xl font-bold text-gray-900 mb-6">Send Us a Message</h2>
+                        
+                        {submitSuccess && (
+                            <div className="bg-green-50 border border-green-200 rounded-lg p-4 mb-6">
+                                <p className="text-green-800">Thank you! Your message has been sent successfully.</p>
+                            </div>
+                        )}
+                        
+                        {error && (
+                            <div className="bg-red-50 border border-red-200 rounded-lg p-4 mb-6">
+                                <p className="text-red-800">{error}</p>
+                            </div>
+                        )}
 
-      {/* Map Section */}
-      <section className="bg-gray-50 py-16">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <h2 className="text-2xl font-bold text-gray-900 mb-8 text-center">Our Locations</h2>
-          <div className="grid grid-cols-1">
-            <div>
-              <h3 className="text-lg font-medium text-gray-900 mb-4">Dubai, UAE</h3>
-              <div className="aspect-w-16 aspect-h-9 rounded-lg overflow-hidden">
-                <iframe
-                  src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3610.178511366393!2d55.27218771500909!3d25.19751498389613!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3e5f43348a67e24b%3A0xff45e502e1ceb7e2!2sBusiness%20Bay!5e0!3m2!1sen!2sae!4v1620000000000!5m2!1sen!2sae"
-                  width="100%"
-                  height="400"
-                  style={{ border: 0 }}
-                  allowFullScreen=""
-                  loading="lazy"
-                />
-              </div>
-        
-            </div>
-          </div>
-        </div>
-      </section>
+                        <form onSubmit={handleSubmit} className="space-y-6">
+                            <div>
+                                <label htmlFor="name" className="block text-sm font-medium text-gray-700">
+                                    Full Name *
+                                </label>
+                                <input
+                                    type="text"
+                                    id="name"
+                                    name="name"
+                                    required
+                                    value={formData.name}
+                                    onChange={handleChange}
+                                    className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-primary focus:border-primary"
+                                />
+                            </div>
+                            
+                            <div>
+                                <label htmlFor="email" className="block text-sm font-medium text-gray-700">
+                                    Email *
+                                </label>
+                                <input
+                                    type="email"
+                                    id="email"
+                                    name="email"
+                                    required
+                                    value={formData.email}
+                                    onChange={handleChange}
+                                    className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-primary focus:border-primary"
+                                />
+                            </div>
+                            
+                            <div>
+                                <label htmlFor="phone" className="block text-sm font-medium text-gray-700">
+                                    Phone
+                                </label>
+                                <PhoneInput
+                                    international
+                                    defaultCountry="AE"
+                                    value={formData.phone}
+                                    onChange={handlePhoneChange}
+                                    className="mt-1 border border-gray-300 rounded-md shadow-sm focus-within:ring-primary focus-within:border-primary"
+                                    inputClassName="w-full py-2 px-3 focus:outline-none"
+                                />
+                            </div>
+                            
+                            <div>
+                                <label htmlFor="service" className="block text-sm font-medium text-gray-700">
+                                    Service Interested In
+                                </label>
+                                <select
+                                    id="service"
+                                    name="service"
+                                    value={formData.service}
+                                    onChange={handleChange}
+                                    className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-primary focus:border-primary"
+                                >
+                                    <option value="">Select a service</option>
+                                    <option value="Business Strategy">Business Strategy</option>
+                                    <option value="Trade Facilitation">Trade Facilitation</option>
+                                    <option value="Immigration">Immigration</option>
+                                    <option value="Legal">Legal</option>
+                                    <option value="Other">Other</option>
+                                </select>
+                            </div>
+                            
+                            <div>
+                                <label htmlFor="message" className="block text-sm font-medium text-gray-700">
+                                    Message
+                                </label>
+                                <textarea
+                                    id="message"
+                                    name="message"
+                                    rows={4}
+                                    value={formData.message}
+                                    onChange={handleChange}
+                                    className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-primary focus:border-primary"
+                                />
+                            </div>
+                            
+                            <div>
+                                <button
+                                    type="submit"
+                                    disabled={isSubmitting}
+                                    className={`inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white ${
+                                        isSubmitting ? 'bg-gray-400' : 'bg-primary hover:bg-primary-dark'
+                                    } focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary`}
+                                >
+                                    {isSubmitting ? (
+                                        <>
+                                            <svg className="animate-spin -ml-1 mr-2 h-4 w-4 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                                                <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                                                <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                                            </svg>
+                                            Sending...
+                                        </>
+                                    ) : (
+                                        <>
+                                            <EnvelopeIcon className="h-5 w-5 mr-2" />
+                                            Send Message
+                                        </>
+                                    )}
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </section>
+
 
       {/* Final CTA */}
-      <section className="bg-white py-16">
+      <section className="bg-gray-100 py-5">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <h2 className="text-3xl font-bold text-gray-900 mb-4">Your Growth Journey Starts Here</h2>
           <p className="text-xl text-gray-600 max-w-3xl mx-auto mb-8">
             Book a consultation with our advisory team or connect instantly via WhatsApp for faster response.
           </p>
           <div className="flex flex-col sm:flex-row justify-center gap-4">
-            <button
-              onClick={() => window.Calendly.initPopupWidget({ url: 'https://calendly.com/your-username' })}
-              className="flex items-center justify-center px-6 py-3 bg-secondary text-primary font-semibold rounded-lg hover:bg-secondary-light transition-colors"
-            >
-              <CalendarIcon className="h-5 w-5 mr-2" />
-              Book Consultation
-            </button>
+            
             <a
               href="https://wa.me/971XXXXXXXXX"
               target="_blank"

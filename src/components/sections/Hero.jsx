@@ -1,8 +1,11 @@
 import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
+import ConsultationModal from '../layout/ConsultationModal';
 import { CalendarDaysIcon, ChatBubbleBottomCenterTextIcon } from '@heroicons/react/24/outline';
+import { useState } from "react";
 
 const Hero = () => {
+  const [open, setOpen] = useState(false);
   const clientTypes = ["Investors", "Entrepreneurs", "Governments"];
   
   return (
@@ -43,13 +46,15 @@ const Hero = () => {
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
             >
-              <Link
-                to="/book"
-                className="flex items-center justify-center bg-secondary text-primary font-bold py-4 px-8 rounded-lg hover:bg-secondary-light transition-colors"
+              
+              <button
+                onClick={() => setOpen(true)}
+                className="flex items-center justify-center bg-secondary text-primary font-bold py-4 px-8 rounded-lg "
               >
                 <CalendarDaysIcon className="h-6 w-6 mr-2" />
-                Book Consultation
-              </Link>
+                Book a Consultation
+              </button>
+              <ConsultationModal open={open} onClose={() => setOpen(false)} />
             </motion.div>
             
             <motion.div

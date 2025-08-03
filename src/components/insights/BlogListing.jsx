@@ -22,7 +22,7 @@ export default function BlogListing() {
       excerpt: "Africa is no longer a frontier—it's the next growth hub. Learn how investors are using UAE structures to unlock opportunities while mitigating risks.",
       tags: ["Investment", "UAE"],
       category: "Investment",
-      date: "May 28, 2023"
+      date: "May 28, 2025"
     },
     {
       id: 2,
@@ -30,7 +30,7 @@ export default function BlogListing() {
       excerpt: "How recent trade agreements are creating faster, more efficient pathways for goods between Dubai and key African markets.",
       tags: ["Trade", "Logistics"],
       category: "Trade",
-      date: "June 5, 2023"
+      date: "June 5, 2025"
     },
     {
       id: 3,
@@ -38,7 +38,7 @@ export default function BlogListing() {
       excerpt: "Recent changes to golden visa programs and how they affect African investors seeking UAE residency.",
       tags: ["Visa", "Residency"],
       category: "Immigration",
-      date: "June 12, 2023"
+      date: "June 12, 2025"
     },
     {
       id: 4,
@@ -46,7 +46,7 @@ export default function BlogListing() {
       excerpt: "Critical compliance considerations for corporate structures operating across multiple African jurisdictions.",
       tags: ["Compliance", "Governance"],
       category: "Legal",
-      date: "June 18, 2023"
+      date: "June 18, 2025"
     },
     {
       id: 5,
@@ -54,7 +54,7 @@ export default function BlogListing() {
       excerpt: "Strategies for building executive teams that can navigate both African and Middle Eastern business cultures.",
       tags: ["Management", "Culture"],
       category: "Leadership",
-      date: "June 25, 2023"
+      date: "June 25, 2025"
     },
     {
       id: 6,
@@ -62,7 +62,7 @@ export default function BlogListing() {
       excerpt: "Case study: How we facilitated a $200M renewable energy project between Dubai investors and Nigerian partners.",
       tags: ["Energy", "PPP"],
       category: "Case Studies",
-      date: "July 3, 2023"
+      date: "July 3, 2025"
     }
   ];
 

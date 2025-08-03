@@ -1,7 +1,11 @@
 import { EnvelopeIcon, BookOpenIcon } from '@heroicons/react/24/outline';
-import { Link } from 'react-router-dom';
+
+import SubscriptionModal from '../layout/SubscriptionModal';
+import { useState } from 'react';
 
 export default function InsightsHero() {
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
   return (
     <section className="relative bg-gray-900 overflow-hidden ">
       
@@ -29,13 +33,18 @@ export default function InsightsHero() {
           
           {/* CTA Buttons */}
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Link
-              to="/subscribe"
+          <button
+              onClick={() => setIsModalOpen(true)}
               className="flex items-center justify-center px-6 py-3 bg-secondary text-primary font-semibold rounded-lg hover:bg-secondary-light transition-colors"
             >
               <EnvelopeIcon className="h-5 w-5 mr-2" />
               Subscribe for Updates
-            </Link>
+            </button>
+
+            <SubscriptionModal 
+              open={isModalOpen} 
+              onClose={() => setIsModalOpen(false)} 
+            />
             
           </div>
         </div>

@@ -3,9 +3,9 @@ import { useState, useEffect } from 'react';
 
 const FirmStory = () => {
   const storyImages = [
-    '/images/story-1.jpg',
-    '/images/story-2.jpg',
-    '/images/story-3.jpg'
+    '/assets/logo.jpg',
+    '/assets/port.jpg',
+    '/assets/bg.jpg'
   ];
   
   const [currentImageIndex, setCurrentImageIndex] = useState(0);

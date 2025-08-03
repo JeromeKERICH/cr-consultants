@@ -23,7 +23,7 @@ const CoreServices = () => {
       icon: <ArrowsRightLeftIcon className="h-10 w-10 text-secondary" />,
       title: "Cross-Border Investment & Trade Facilitation",
       description: "We connect investors, enterprises, and governments with vetted opportunities and partners. Our team ensures compliant trade flows and investment frameworks for Africa–UAE success.",
-      slug: "cross-border-investment",
+      slug: "cross-border",
       image: "/assets/s3.jpg"
     },
     {
@@ -44,7 +44,7 @@ const CoreServices = () => {
       icon: <BriefcaseIcon className="h-10 w-10 text-secondary" />,
       title: "Family Office & Wealth Structuring",
       description: "We assist high-net-worth families in structuring their wealth, setting up family offices, and managing cross-border succession planning and compliance.",
-      slug: "family-office",
+      slug: "family",
       image: "/assets/s6.jpg"
     },
     {
@@ -58,7 +58,7 @@ const CoreServices = () => {
       icon: <ScaleIcon className="h-10 w-10 text-secondary" />,
       title: "Legal Consultancy Outside UAE Jurisdiction",
       description: "Our legal team provides robust commercial, regulatory, and corporate advisory for businesses entering African markets — with licensing in Kenya and other regions.",
-      slug: "legal-consultancy",
+      slug: "legal",
       image: "/assets/s7.png"
     }
   ];
