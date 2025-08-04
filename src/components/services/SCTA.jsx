@@ -16,7 +16,7 @@ export default function ServiceCTA() {
           </h2>
           
           {/* Subheading */}
-          <p className="text-xl text-primary-100 max-w-3xl mx-auto mb-10">
+          <p className="text-l md:text-xl text-primary-100 max-w-3xl mx-auto mb-10">
             Your Africa–UAE strategy starts here. Let's design the right pathway for your business, wealth, or project.
           </p>
           

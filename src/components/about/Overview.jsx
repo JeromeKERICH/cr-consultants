@@ -60,7 +60,7 @@ const AboutHero = () => {
           >
             <Link
               to="/services"
-              className="inline-block bg-secondary text-primary font-bold py-3 px-8 mb-20 rounded-lg hover:bg-secondary-light transition-colors duration-300"
+              className="inline-block bg-secondary text-primary font-bold  py-3 px-8 mb-20 rounded-lg hover:bg-secondary-light transition-colors duration-300"
             >
               Explore Our Services
             </Link>

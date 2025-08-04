@@ -24,7 +24,7 @@ const BookCTA = () => {
             whileInView={{ opacity: 1 }}
             viewport={{ once: true }}
             transition={{ delay: 0.3, duration: 0.8 }}
-            className="text-xl text-gray-800 mb-10 max-w-3xl mx-auto"
+            className="text-l md:text-xl text-gray-800 mb-10 max-w-3xl mx-auto"
           >
             Whether you're an investor, executive, or entrepreneur, we're ready to guide your expansion with clarity and confidence.
           </motion.p>

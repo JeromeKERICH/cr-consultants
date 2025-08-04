@@ -46,7 +46,7 @@ const FirmStory = () => {
               whileInView={{ opacity: 1 }}
               viewport={{ once: true }}
               transition={{ delay: 0.3, duration: 0.6 }}
-              className="text-lg text-gray-700 mb-6"
+              className="text-l md:text-lg text-gray-700 mb-6"
             >
               Our journey began with a mission: to simplify cross-border business for the bold. Founded by Princess Caroline Mutisya, a seasoned legal architect with 14+ years of experience, CR Strategic Advisory was born from the real need for structure, clarity, and connection in Africa–UAE investment.
             </motion.p>

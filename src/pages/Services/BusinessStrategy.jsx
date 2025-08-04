@@ -13,9 +13,12 @@ import {
   } from '@heroicons/react/24/outline';
 import { useEffect } from 'react';
   import { Link } from 'react-router-dom';
+import ConsultationModal from '../../components/layout/ConsultationModal';
+import { useState } from 'react';
   
   
   export default function BusinessStrategyService() {
+    const [open, setOpen] = useState(false);
     useEffect(() => {
       window.scrollTo(0, 0)
     },[]);
@@ -67,19 +70,19 @@ import { useEffect } from 'react';
                       <span className="ml-3 text-gray-700">Avoid costly regulatory mistakes</span>
                     </li>
                     <li className="flex items-start">
-                      <LightBulbIcon className="h-5 w-5 text-secondary mt-0.5 flex-shrink-0" />
+                      <ShieldCheckIcon className="h-5 w-5 text-secondary mt-0.5 flex-shrink-0" />
                       <span className="ml-3 text-gray-700">Accelerate your market entry</span>
                     </li>
                     <li className="flex items-start">
-                      <GlobeAltIcon className="h-5 w-5 text-secondary mt-0.5 flex-shrink-0" />
+                      <ShieldCheckIcon className="h-5 w-5 text-secondary mt-0.5 flex-shrink-0" />
                       <span className="ml-3 text-gray-700">Leverage local networks and partnerships</span>
                     </li>
                     <li className="flex items-start">
-                      <ScaleIcon className="h-5 w-5 text-secondary mt-0.5 flex-shrink-0" />
+                      <ShieldCheckIcon className="h-5 w-5 text-secondary mt-0.5 flex-shrink-0" />
                       <span className="ml-3 text-gray-700">Optimize your tax and corporate structure</span>
                     </li>
                     <li className="flex items-start">
-                        <ArrowPathIcon className="h-5 w-5 text-secondary mt-0.5 flex-shrink-0" />
+                        <ShieldCheckIcon className="h-5 w-5 text-secondary mt-0.5 flex-shrink-0" />
                         <span className="ml-3 text-gray-700">Ensure compliance with local laws</span>
                     </li>
                   </ul>
@@ -286,15 +289,16 @@ import { useEffect } from 'react';
               Our Africa-UAE business strategists will design a customized expansion plan for your specific objectives.
             </p>
             <div className="flex flex-col sm:flex-row justify-center gap-4">
-              <Link
-                to="/book"
+              <button
+                onClick={() => setOpen(true)}
                 className="flex items-center justify-center px-6 py-3 bg-secondary text-primary font-semibold rounded-lg hover:bg-secondary-light transition-colors"
               >
                 Book Strategy Session
-              </Link>
+              </button>
+              <ConsultationModal open={open} onClose={() => setOpen(false)} />
               <Link
                 to="/contact"
-                className="flex items-center justify-center px-6 py-3 border-2 border-white text-white font-semibold rounded-lg hover:bg-white hover:text-primary transition-colors"
+                className="flex items-center justify-center px-6 py-3 border-2 border-white text-white font-semibold rounded-lg transition-colors"
               >
                 Request Proposal
               </Link>
